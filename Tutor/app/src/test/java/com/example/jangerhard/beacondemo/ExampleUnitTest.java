@@ -1,4 +1,4 @@
-package com.example.jangerhard.beacondemo;
+package com.example.jangerhard.tutor;
 
 import org.junit.Test;
 

@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         bFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendEmail("js45407n@pace.edu", "Feedback on Tutor App");
+                sendEmail("js45407n@pace.edu", "Feedback on this amazing app");
             }
         });
 

@@ -1,6 +1,7 @@
 package com.example.jangerhard.tutor;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.joda.time.DateTime;
 
@@ -29,33 +30,33 @@ public class TutorTimeTable {
 
         switch (day){
             case 1: case 2: //Monday and Tuesday
-                if (hour >= 12 && hour <= 17 )
+                if (hour >= 12 && hour < 17 )
                     return new String[] {tutor_Bushan};
                 break;
             case 3: //Wednesday
-                if (hour >= 15 && hour <= 16 )
+                if (hour >= 15 && hour < 16 )
                     return new String[] {tutor_Dhruvil, tutor_Ian};
-                else if (hour >= 16 && hour <= 18 )
+                else if (hour >= 16 && hour < 18 )
                     return new String[] {tutor_Ian, tutor_Jigar};
-                else if (hour >= 12 && hour <= 16 )
+                else if (hour >= 12 && hour < 16 )
                     return new String[] {tutor_Dhruvil};
-                if (hour >= 16 && hour <= 19 )
+                if (hour >= 16 && hour < 19 )
                     return new String[] {tutor_Jigar};
                 break;
             case 4: //Thursday
-                if (hour >= 10 && hour <= 12 )
+                if (hour >= 10 && hour < 12 )
                     return new String[] {tutor_Ian};
-                else if (hour >= 12 && hour <= 15 )
+                else if (hour >= 12 && hour < 15 )
                     return new String[] {tutor_Hardik, tutor_Ian};
-                else if (hour >= 15 && hour <= 17 )
+                else if (hour >= 15 && hour < 17 )
                     return new String[] {tutor_Hardik};
                 break;
             case 5: //Friday
-                if (hour >= 10 && hour <= 13 )
+                if (hour >= 10 && hour < 13 )
                     return new String[] {tutor_Ian};
-                else if (hour >= 13 && hour <= 14 )
+                else if (hour >= 13 && hour < 14 )
                     return new String[] {tutor_Hardik, tutor_Ian};
-                else if (hour >= 14 && hour <= 17 )
+                else if (hour >= 14 && hour < 17 )
                     return new String[] {tutor_Hardik};
                 break;
 

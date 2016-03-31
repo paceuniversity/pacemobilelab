@@ -86,11 +86,8 @@ public class MainActivity extends AppCompatActivity {
         //String[] tutors = new String[]{"Ian Carvahlo/ic34882n@pace.edu", "Bhushan Surayawanshi/bs38923n@pace.edu"}; //For testing
 
         if (tutors == null) {
-            //title.setText(getString(R.string.title_not_available));
-            //removeCards();
-            //TODO: Remove this before publishing app
-            title.setText(getString(R.string.title_available_single));
-            displayCards(new String[]{"Mickey Mouse/mickeymouse@disney.com"});
+            title.setText(getString(R.string.title_not_available));
+            removeCards();
         } else {
 
             if (tutors.length > 1)

@@ -83,11 +83,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void refresh(){
         String[] tutors = timeTable.getTutors(DateTime.now());
-        //String[] tutors = new String[]{"Ian Carvahlo/ic34882n@pace.edu", "Jigar Mehta/jm85438@pace.edu"}; //For testing
+        //String[] tutors = new String[]{"Ian Carvahlo/ic34882n@pace.edu", "Bhushan Surayawanshi/bs38923n@pace.edu"}; //For testing
 
         if (tutors == null) {
-            title.setText(getString(R.string.title_not_available));
-            removeCards();
+            //title.setText(getString(R.string.title_not_available));
+            //removeCards();
+            //TODO: Remove this before publishing app
+            title.setText(getString(R.string.title_available_single));
+            displayCards(new String[]{"Mickey Mouse/mickeymouse@disney.com"});
         } else {
 
             if (tutors.length > 1)
@@ -159,6 +162,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case "Hardik":
                 iv.setImageResource(R.drawable.hardik);
+                break;
+            default:
+                iv.setImageResource(R.drawable.mickey);
                 break;
         }
     }

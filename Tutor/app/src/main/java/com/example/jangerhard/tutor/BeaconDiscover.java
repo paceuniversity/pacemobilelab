@@ -33,7 +33,7 @@ public class BeaconDiscover extends Application {
             public void onEnteredRegion(Region region, List<Beacon> list) {
                 String[] tutors = timeTable.getTutors(DateTime.now());
 
-                //String[] tutors = new String[]{"Ian Carvahlo/ic34882n@pace.edu", "Jigar Mehta/jm85438@pace.edu"}; //For testing
+                //String[] tutors = new String[]{"Ian Carvahlo/ic34882n@pace.edu", "Bhushan Surayawanshi/bs38923n@pace.edu"}; //For testing
 
                 if (tutors == null)
                     showNotification("Welcome to the common area!","No one available right now.");

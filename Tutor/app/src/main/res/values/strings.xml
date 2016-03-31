@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">Tutor</string>
+    <string name="app_name">Need Tutor</string>
     <string name="title_activity_settings">Settings</string>
 
 
     <string name="email">Email</string>
+    <string name="title_feedback">Feedback on app</string>
     <string name="title_available_plural">Available tutors right now</string>
     <string name="title_available_single">Available tutor right now</string>
     <string name="title_not_available">Sorry, no tutors available at this time</string>

@@ -66,29 +66,32 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onBeaconsDiscovered(Region region, List<Beacon> list) {
                 if (!list.isEmpty()) {
-
-                    String[] tutors = timeTable.getTutors(DateTime.now());
-                    //String[] tutors = new String[]{"Ian Carvahlo/ic34882n@pace.edu", "Jigar Mehta/jm85438@pace.edu"}; //For testing
-
-                    if (tutors == null) {
-                        title.setText("Sorry, no tutors available at this time");
-                        removeCards();
-                    } else {
-
-                        if (tutors.length > 1)
-                            title.setText("Available tutors right now:");
-                        else
-                            title.setText("Available tutor right now:");
-
-                        displayCards(tutors);
-                    }
-
+                    refresh();
                 } else {
                     title.setText("You're outside the reach of the beacons!");
                     removeCards();
                 }
             }
         });
+    }
+
+    private void refresh(){
+        String[] tutors = timeTable.getTutors(DateTime.now());
+        //String[] tutors = new String[]{"Ian Carvahlo/ic34882n@pace.edu", "Jigar Mehta/jm85438@pace.edu"}; //For testing
+
+        if (tutors == null) {
+            title.setText("Sorry, no tutors available at this time");
+            removeCards();
+        } else {
+
+            if (tutors.length > 1)
+                title.setText("Available tutors right now:");
+            else
+                title.setText("Available tutor right now:");
+
+            displayCards(tutors);
+        }
+
     }
 
     private void displayCards(String[] tutors){

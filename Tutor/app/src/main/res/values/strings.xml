@@ -4,6 +4,11 @@
 
 
     <string name="email">Email</string>
+    <string name="title_available_plural">Available tutors right now</string>
+    <string name="title_available_single">Available tutor right now</string>
+    <string name="title_not_available">Sorry, no tutors available at this time</string>
+
+
 
     <string name="tutor_Bhushan">Bhushan Surayawanshi/bs38923n@pace.edu</string>
     <string name="tutor_Ian">Ian Carvahlo/ic34882n@pace.edu</string>

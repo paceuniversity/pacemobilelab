@@ -58,6 +58,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        startBeaconRanging();
+
+    }
+
+    private void startBeaconRanging() {
         beaconManager = new BeaconManager(this);
         region = new Region("Common Area",
                 UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), null, null);
@@ -80,14 +85,14 @@ public class MainActivity extends AppCompatActivity {
         //String[] tutors = new String[]{"Ian Carvahlo/ic34882n@pace.edu", "Jigar Mehta/jm85438@pace.edu"}; //For testing
 
         if (tutors == null) {
-            title.setText("Sorry, no tutors available at this time");
+            title.setText(getString(R.string.title_not_available));
             removeCards();
         } else {
 
             if (tutors.length > 1)
-                title.setText("Available tutors right now:");
+                title.setText(getString(R.string.title_available_plural));
             else
-                title.setText("Available tutor right now:");
+                title.setText(getString(R.string.title_available_single));
 
             displayCards(tutors);
         }

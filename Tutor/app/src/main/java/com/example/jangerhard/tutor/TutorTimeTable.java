@@ -6,7 +6,7 @@ import android.util.Log;
 import org.joda.time.DateTime;
 
 /**
- * Created by jangerhard on 18-Mar-16.
+ * TODO: Create a better way of instantiating tutors and updating the schedule.
  */
 public class TutorTimeTable {
 

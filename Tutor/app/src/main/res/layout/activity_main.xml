@@ -16,6 +16,8 @@
         android:text="Welcome!"
         android:id="@+id/tv_title"
         android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp" />

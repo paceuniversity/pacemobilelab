@@ -58,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        startBeaconRanging();
+        refresh();
+        //startBeaconRanging();
 
     }
 
@@ -179,19 +180,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        refresh();
+
         SystemRequirementsChecker.checkWithDefaultDialogs(this);
 
-        beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
-            @Override
-            public void onServiceReady() {
-                beaconManager.startRanging(region);
-            }
-        });
+//        beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
+//            @Override
+//            public void onServiceReady() {
+//                beaconManager.startRanging(region);
+//            }
+//        });
     }
 
     @Override
     protected void onPause() {
-        beaconManager.stopRanging(region);
+//        beaconManager.stopRanging(region);
 
         super.onPause();
     }

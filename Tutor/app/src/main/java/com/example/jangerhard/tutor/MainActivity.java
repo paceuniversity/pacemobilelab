@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
 
         refresh();
 
-        SystemRequirementsChecker.checkWithDefaultDialogs(this);
+        //SystemRequirementsChecker.checkWithDefaultDialogs(this);
 
 //        beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
 //            @Override

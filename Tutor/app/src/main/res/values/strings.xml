@@ -4,6 +4,7 @@
 
 
     <string name="email">Email</string>
+    <string name="rate">Rate</string>
     <string name="title_feedback">Feedback on app</string>
     <string name="title_available_plural">Available tutors right now</string>
     <string name="title_available_single">Available tutor right now</string>

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private Region region;
     private TutorTimeTable timeTable;
 
+    int hiddenSecret;
+
     TextView title, tv_tutor1_name, tv_tutor1_email, tv_tutor2_name, tv_tutor2_email;
     CardView cTutor1, cTutor2;
     ImageView ivTutor1, ivTutor2;
@@ -42,9 +45,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        hiddenSecret = 0;
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hiddenSecret += 1;
+
+                if (hiddenSecret >= 20){
+                    Toast.makeText(getApplicationContext(), "Stop pressing that..", Toast.LENGTH_SHORT).show();
+                    hiddenSecret = 0;
+                }
+            }
+        });
 
         timeTable = new TutorTimeTable(this);
 
@@ -222,6 +237,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             case R.id.settings:
+                showAbout();
                 return true;
 
 
@@ -229,6 +245,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showAbout(){
+
     }
 
     @Override

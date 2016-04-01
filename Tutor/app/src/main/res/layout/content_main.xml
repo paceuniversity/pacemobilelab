@@ -57,7 +57,7 @@
 
             <Button
                 android:layout_width="wrap_content"
-                android:textColor="@color/textColorPrimary"
+                android:theme="@style/MyButton"
                 android:layout_height="wrap_content"
                 android:text="@string/email"
                 android:id="@+id/bTutor1"
@@ -111,9 +111,9 @@
 
         <Button
             android:layout_weight="1"
-            android:textColor="@color/textColorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:theme="@style/MyButton"
             android:id="@+id/bTutor2"
             android:text="@string/email"
             android:layout_alignParentBottom="true"

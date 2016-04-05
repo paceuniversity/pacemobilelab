@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void refresh(){
         String[] tutors = timeTable.getTutors(DateTime.now());
-        //String[] tutors = new String[]{"Ian Carvahlo/ic34882n@pace.edu", "Bhushan Surayawanshi/bs38923n@pace.edu"}; //For testing
+        //String[] tutors = new String[]{"Bhushan Surayawanshi/bs38923n@pace.edu", "Ian Carvahlo/ic34882n@pace.edu"}; //For testing
 
         if (tutors == null) {
             title.setText(getString(R.string.title_not_available));

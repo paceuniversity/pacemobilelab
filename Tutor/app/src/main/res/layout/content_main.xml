@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome!"
+        android:text="Available tutor right now"
         android:id="@+id/tv_title"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -40,47 +40,53 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="180dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:text="Bhushan Surayawanshi"
                 android:id="@+id/tv_tutor1_name"
                 android:gravity="top"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_alignParentStart="true" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_tutor1_email"
                 android:layout_below="@id/tv_tutor1_name"
                 android:text="test@pace.edu"
-                android:textSize="12sp"/>
+                android:textSize="15sp"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:theme="@style/MyButton"
-                android:layout_height="wrap_content"
-                android:text="@string/email"
-                android:id="@+id/bTutor1"
-                android:layout_alignParentBottom="true"
-                android:enabled="true"
-                android:clickable="true" />
-
-            <Button
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:theme="@style/MyButton"
-                android:id="@+id/bRate1"
-                android:text="@string/rate"
-                android:layout_toEndOf="@id/bTutor1"
-                android:layout_alignParentBottom="true"
-                android:clickable="false"
-                android:visibility="gone"
-                android:enabled="false" />
+                android:layout_alignParentBottom="true">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:theme="@style/MyButton"
+                    android:layout_height="wrap_content"
+                    android:text="@string/email"
+                    android:id="@+id/bTutor1"
+                    android:enabled="true"
+                    android:clickable="true" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/MyButton"
+                    android:id="@+id/bRate1"
+                    android:text="@string/rate"
+                    android:clickable="false"
+                    android:visibility="gone"
+                    android:enabled="false" />
+            </LinearLayout>
 
             <ImageView
-                android:layout_width="115dp"
-                android:layout_height="115dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:id="@+id/iv_Tutor1"
+                android:background="@drawable/bushan"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
                 android:elevation="2dp"/>
@@ -105,11 +111,10 @@
             android:layout_height="match_parent">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:text="Tutor 2"
+            android:text="Ian Carvahlo"
             android:id="@+id/tv_tutor2_name"
-            android:gravity="center"
             android:textSize="18sp"
             android:textStyle="bold"/>
         <TextView
@@ -119,7 +124,13 @@
             android:layout_below="@id/tv_tutor2_name"
             android:id="@+id/tv_tutor2_email"
             android:gravity="center"
-            android:textSize="12sp"/>
+            android:textSize="15sp"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true">
 
         <Button
             android:layout_width="wrap_content"
@@ -127,7 +138,6 @@
             android:theme="@style/MyButton"
             android:id="@+id/bTutor2"
             android:text="@string/email"
-            android:layout_alignParentBottom="true"
             android:clickable="true"
             android:enabled="true" />
 
@@ -137,15 +147,15 @@
                 android:theme="@style/MyButton"
                 android:id="@+id/bRate2"
                 android:text="@string/rate"
-                android:layout_toEndOf="@id/bTutor2"
-                android:layout_alignParentBottom="true"
                 android:visibility="gone"
                 android:clickable="false"
                 android:enabled="false" />
+            </LinearLayout>
 
             <ImageView
-                android:layout_width="115dp"
-                android:layout_height="115dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/ian"
                 android:id="@+id/iv_Tutor2"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
@@ -160,8 +170,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/bFeedback"
         android:text="@string/title_feedback"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        style="@style/Widget.AppCompat.Button.Borderless"/>
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

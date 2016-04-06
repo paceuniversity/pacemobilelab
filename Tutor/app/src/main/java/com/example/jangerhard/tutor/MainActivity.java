@@ -1,6 +1,7 @@
 package com.example.jangerhard.tutor;
 
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -16,14 +17,13 @@ import android.widget.Toast;
 import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
-import com.estimote.sdk.SystemRequirementsChecker;
 
 import org.joda.time.DateTime;
 
 import java.util.List;
 import java.util.UUID;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar mToolbar;
     private Menu menu;
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     TextView title, tv_tutor1_name, tv_tutor1_email, tv_tutor2_name, tv_tutor2_email;
     CardView cTutor1, cTutor2;
     ImageView ivTutor1, ivTutor2;
-    Button bTutor1, bTutor2, bFeedback;
+    Button bTutor1, bTutor2, bRate1, bRate2, bFeedback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 hiddenSecret += 1;
 
-                if (hiddenSecret >= 20){
+                if (hiddenSecret >= 20) {
                     Toast.makeText(getApplicationContext(), "Stop pressing that..", Toast.LENGTH_SHORT).show();
                     hiddenSecret = 0;
                 }
@@ -62,6 +62,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
         timeTable = new TutorTimeTable(this);
+
+        instantiate();
+
+        refresh();
+        //startBeaconRanging();
+
+    }
+
+    private void instantiate() {
 
         title = (TextView) findViewById(R.id.tv_title);
 
@@ -73,20 +82,15 @@ public class MainActivity extends AppCompatActivity {
         ivTutor2 = (ImageView) findViewById(R.id.iv_Tutor2);
         bTutor1 = (Button) findViewById(R.id.bTutor1);
         bTutor2 = (Button) findViewById(R.id.bTutor2);
+        bRate1 = (Button) findViewById(R.id.bRate1);
+        bRate1.setOnClickListener(this);
+        bRate2 = (Button) findViewById(R.id.bRate2);
+        bRate2.setOnClickListener(this);
         cTutor1 = (CardView) findViewById(R.id.card1);
         cTutor2 = (CardView) findViewById(R.id.card2);
 
         bFeedback = (Button) findViewById(R.id.bFeedback);
-        bFeedback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendEmail(getString(R.string.support_email), "Feedback on Tutor App");
-            }
-        });
-
-        refresh();
-        //startBeaconRanging();
-
+        bFeedback.setOnClickListener(this);
     }
 
     private void startBeaconRanging() {
@@ -108,12 +112,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void refresh(){
+
+        removeCards();
+
         String[] tutors = timeTable.getTutors(DateTime.now());
         //String[] tutors = new String[]{"Bhushan Surayawanshi/bs38923n@pace.edu", "Ian Carvahlo/ic34882n@pace.edu"}; //For testing
 
+
         if (tutors == null) {
             title.setText(getString(R.string.title_not_available));
-            removeCards();
+
         } else {
 
             if (tutors.length > 1)
@@ -235,20 +243,20 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
 
-
             case R.id.settings:
                 showAbout();
                 return true;
-
-
-
         }
 
         return super.onOptionsItemSelected(item);
     }
 
     private void showAbout(){
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(R.mipmap.ic_new_launcher);
+        builder.setTitle(getString(R.string.title_about));
+        builder.setMessage(getString(R.string.text_about));
+        builder.show();
     }
 
     @Override
@@ -259,4 +267,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.bRate1:
+                break;
+            case R.id.bRate2:
+                break;
+            case R.id.bFeedback:
+                sendEmail(getString(R.string.support_email), "Feedback on Tutor App");
+                break;
+        }
+    }
 }

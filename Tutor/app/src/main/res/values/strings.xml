@@ -10,7 +10,12 @@
     <string name="title_available_single">Available tutor right now</string>
     <string name="title_not_available">Sorry, no tutors available at this time</string>
 
-
+    <string name="title_about">About</string>
+    <string name="text_about">
+        This app was created to demonstrate how beacons could help to display relevant information where it was needed;
+        as in showing a notification with the available tutors when entering the area where the tutors are.
+        \n\nCreated by Jan Schøpp for Pace Mobile Labs.
+    </string>
 
     <string name="tutor_Bhushan">Bhushan Surayawanshi/bs38923n@pace.edu</string>
     <string name="tutor_Ian">Ian Carvahlo/ic34882n@pace.edu</string>

@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Toolbar mToolbar;
     private Menu menu;
 
-
     private BeaconManager beaconManager;
     private Region region;
     private TutorTimeTable timeTable;
@@ -93,6 +92,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bFeedback.setOnClickListener(this);
     }
 
+    /**
+     * Unused as ranging currently serves no purpose.
+     * Could change in the future.
+     */
     private void startBeaconRanging() {
         beaconManager = new BeaconManager(this);
         region = new Region("Common Area",
@@ -242,7 +245,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-
             case R.id.settings:
                 showAbout();
                 return true;

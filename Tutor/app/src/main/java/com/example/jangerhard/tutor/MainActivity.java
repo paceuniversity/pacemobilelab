@@ -1,6 +1,7 @@
 package com.example.jangerhard.tutor;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    SharedPreferences prefs = null;
+
     private Toolbar mToolbar;
     private Menu menu;
 
@@ -43,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        prefs = getSharedPreferences("com.mycompany.myAppName", MODE_PRIVATE);
 
         hiddenSecret = 0;
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -220,6 +225,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onResume() {
         super.onResume();
 
+        if (prefs.getBoolean("firstrun", true)) {
+
+            showAlertDialog("Welcome!", "Thank you for downloading this app! \n\n" +
+                    "Check out the 'About' and 'How to use' in the top right corner, " +
+                    "and enjoy!");
+
+            prefs.edit().putBoolean("firstrun", false).commit();
+        }
+
         refresh();
 
         //SystemRequirementsChecker.checkWithDefaultDialogs(this);
@@ -246,18 +260,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.settings:
-                showAbout();
+                showAlertDialog(getString(R.string.title_about), getString(R.string.text_about));
+                return true;
+            case R.id.howto:
+                showAlertDialog(getString(R.string.title_howto), getString(R.string.text_howto));
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void showAbout(){
+    private void showAlertDialog(String title, String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(R.mipmap.ic_new_launcher);
-        builder.setTitle(getString(R.string.title_about));
-        builder.setMessage(getString(R.string.text_about));
+        builder.setTitle(title);
+        builder.setMessage(message);
         builder.show();
     }
 

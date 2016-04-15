@@ -52,11 +52,11 @@ public class TutorTimeTable {
                     return new String[] {tutor_Hardik};
                 break;
             case 5: //Friday
-                if (hour >= 10 && hour < 13 )
+                if (hour >= 10 && hour < 12 )
                     return new String[] {tutor_Ian};
-                else if (hour >= 13 && hour < 14 )
+                else if (hour >= 12 && hour < 13 )
                     return new String[] {tutor_Hardik, tutor_Ian};
-                else if (hour >= 14 && hour < 17 )
+                else if (hour >= 13 && hour < 17 )
                     return new String[] {tutor_Hardik};
                 break;
 

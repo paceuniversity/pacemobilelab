@@ -12,9 +12,23 @@
 
     <string name="title_about">About</string>
     <string name="text_about">
-        This app was created to demonstrate how beacons could help to display relevant information where it was needed;
-        as in showing a notification with the available tutors when entering the area where the tutors are.
+        This app was created to demonstrate how beacons could help to display relevant information
+        where it was needed; as in showing a notification (if bluetooth is activated) with the
+        available tutors when entering the area where the tutors are. The app itself will
+        always show the available tutors, or notify you if there are no tutors available.
+
+        \n\nFor feedback or suggestions please use the feedback-button
+        at the bottom of the screen.
+
         \n\nCreated by Jan Schøpp for Pace Mobile Labs.
+    </string>
+    <string name="title_howto">How to use</string>
+    <string name="text_howto">
+        To use the notification feature, just activate bluetooth and you will receive a
+        notification with the available tutors, if you are in the Seidenberg Lounge. You don\'t
+        need to have the app open to receive the notification, but if you are already within the
+        space and have received the notification, you can always open the app
+        to quickly check the availability of the tutors.
     </string>
 
     <string name="tutor_Bhushan">Bhushan Surayawanshi/bs38923n@pace.edu</string>

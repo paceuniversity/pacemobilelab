@@ -29,6 +29,10 @@
         need to have the app open to receive the notification, but if you are already within the
         space and have received the notification, you can always open the app
         to quickly check the availability of the tutors.
+
+        \n\nIf notifications are not working even though you have bluetooth activated, please make
+        sure you have given the app permission to use your location. This is needed to find out if
+        you are in the Seidenberg Lounge.
     </string>
 
     <string name="tutor_Bhushan">Bhushan Surayawanshi/bs38923n@pace.edu</string>

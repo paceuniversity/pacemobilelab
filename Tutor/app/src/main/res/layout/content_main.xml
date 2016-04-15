@@ -83,8 +83,8 @@
             </LinearLayout>
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="105dp"
+                android:layout_height="105dp"
                 android:id="@+id/iv_Tutor1"
                 android:background="@drawable/bushan"
                 android:layout_centerVertical="true"
@@ -153,8 +153,8 @@
             </LinearLayout>
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="105dp"
+                android:layout_height="105dp"
                 android:background="@drawable/ian"
                 android:id="@+id/iv_Tutor2"
                 android:layout_centerVertical="true"

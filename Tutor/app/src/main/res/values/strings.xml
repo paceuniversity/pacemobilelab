@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Need Tutor</string>
+    <string name="app_name">Pace Tutors</string>
     <string name="title_activity_settings">About</string>
 
 
@@ -41,7 +41,17 @@
     <string name="tutor_Dhruvil">Dhruvil Gandhi/dg83196@pace.edu</string>
     <string name="tutor_Hardik">Hardik Patel/hp68381@pace.edu</string>
 
+    <string-array
+        name="tutor_strings">
+        <item>Bhushan Surayawanshi/bs38923n@pace.edu</item>
+        <item>Ian Carvahlo/ic34882n@pace.edu</item>
+        <item>Jigar Mehta/jm85438@pace.edu</item>
+        <item>Dhruvil Gandhi/dg83196@pace.edu</item>
+        <item>Hardik Patel/hp68381@pace.edu</item>
+    </string-array>
+
     <string name="support_email">js45407n@pace.edu</string>
+    <string name="title_activity_rate_tutors">Rate Tutors</string>
 
 
 </resources>

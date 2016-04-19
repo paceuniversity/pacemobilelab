@@ -16,7 +16,7 @@ import org.joda.time.DateTime;
 import java.util.List;
 import java.util.UUID;
 
-public class BeaconDiscover extends Application {
+public class BeaconDiscoverApplication extends Application {
 
     private BeaconManager beaconManager;
     private TutorTimeTable timeTable;

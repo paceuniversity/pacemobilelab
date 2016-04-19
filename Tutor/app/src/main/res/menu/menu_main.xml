@@ -15,4 +15,11 @@
         android:title="@string/title_howto"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/rate"
+        android:orderInCategory="100"
+        android:title="@string/title_activity_rate_tutors"
+        android:visible="false"
+        app:showAsAction="never" />
+
 </menu>

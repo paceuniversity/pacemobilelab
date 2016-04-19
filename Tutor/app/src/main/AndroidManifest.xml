@@ -4,7 +4,7 @@
     package="com.example.jangerhard.tutor">
 
     <application
-        android:name="com.example.jangerhard.tutor.BeaconDiscover"
+        android:name=".BeaconDiscoverApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         tools:replace="android:icon"
@@ -20,6 +20,16 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <!-- A child of the main activity -->
+        <activity
+            android:name=".RateTutorsActivity"
+            android:label="@string/title_activity_rate_tutors"
+            android:parentActivityName=".MainActivity" >
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
     </application>
 

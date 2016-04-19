@@ -4,8 +4,23 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorSecondary">#FF4081</color>
     <color name="colorSecondaryDark">#F50057</color>
+    <color name="dividerColor">#B6B6B6</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- Using red as primary color
+    <color name="colorPrimary">#F44336</color>
+    <color name="colorPrimaryDark">#D32F2F</color>
+    <color name="colorSecondary">#F44336</color>
+    <color name="colorSecondaryDark">#D32F2F</color>
+    <color name="dividerColor">#B6B6B6</color>
+    <color name="colorLightPrimary">#FFCDD2</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="windowBackground">#FFFFFF</color>
+    <color name="navigationBarColor">#000000</color>
+    <color name="colorAccent">#FFC107</color>
+     -->
+
 </resources>

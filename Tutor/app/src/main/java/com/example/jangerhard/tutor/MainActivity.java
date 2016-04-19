@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        prefs = getSharedPreferences("com.mycompany.myAppName", MODE_PRIVATE);
+        prefs = getSharedPreferences("com.example.jangerhard", MODE_PRIVATE);
 
         hiddenSecret = 0;
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -187,27 +187,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setCardPhoto(ImageView iv, String name){
+        iv.setImageResource(getImageResource(name));
+    }
 
+    public int getImageResource(String name){
         switch (name) {
 
             case "Dhruvil":
-                iv.setImageResource(R.drawable.dhruvil);
-                break;
+                return R.drawable.dhruvil;
             case "Bhushan":
-                iv.setImageResource(R.drawable.bushan);
-                break;
+                return(R.drawable.bushan);
             case "Ian":
-                iv.setImageResource(R.drawable.ian);
-                break;
+                return(R.drawable.ian);
             case "Jigar":
-                iv.setImageResource(R.drawable.jigar);
-                break;
+                return(R.drawable.jigar);
             case "Hardik":
-                iv.setImageResource(R.drawable.hardik);
-                break;
+                return(R.drawable.hardik);
             default:
-                iv.setImageResource(R.drawable.mickey);
-                break;
+                return(R.drawable.mickey);
         }
     }
 
@@ -268,6 +265,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.howto:
                 showAlertDialog(getString(R.string.title_howto), getString(R.string.text_howto));
                 return true;
+            case R.id.rate:
+                Intent i = new Intent(this, RateTutorsActivity.class);
+                startActivity(i);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -292,10 +293,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.bRate1:
+
+            case R.id.bRate1: case R.id.bRate2:
+                Intent i = new Intent(this, RateTutorsActivity.class);
+                startActivity(i);
                 break;
-            case R.id.bRate2:
-                break;
+
             case R.id.bFeedback:
                 sendEmail(getString(R.string.support_email), "Feedback on Tutor App");
                 break;

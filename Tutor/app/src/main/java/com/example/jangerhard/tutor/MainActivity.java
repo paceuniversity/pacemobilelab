@@ -1,5 +1,6 @@
 package com.example.jangerhard.tutor;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
@@ -70,6 +71,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         instantiate();
 
         refresh();
+
+        checkForBlueTooth();
         //startBeaconRanging();
 
     }
@@ -298,4 +301,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
+    private void checkForBlueTooth() {
+
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (mBluetoothAdapter == null) {
+            showAlertDialog("Bluetooth not supported!", "It appears your device does not support " +
+                    "bluetooth, and you will therefore not get the full experience of this app..");
+        } else {
+            if (!mBluetoothAdapter.isEnabled()) {
+                // Bluetooth is not enable :)
+                showAlertDialog("Bluetooth not active!", "If you want to receive notifications, " +
+                        "please activate your bluetooth!");
+            }
+        }
+    }
+
 }

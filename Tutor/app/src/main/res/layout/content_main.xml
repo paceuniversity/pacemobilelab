@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Available tutor right now"
+        android:text="MAIN TITLE"
         android:id="@+id/tv_title"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -24,145 +24,14 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp" />
 
-    <android.support.v7.widget.CardView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/cardList_main"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:id="@+id/card1"
-        style="@style/MyCardViewStyle"
-        app:cardPreventCornerOverlap="false"
-        app:cardUseCompatPadding="true"
-        android:clipToPadding="false"
-        android:visibility="visible"
-        android:layout_below="@id/tv_title">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title"
+        >
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:text="Bhushan Surayawanshi"
-                android:id="@+id/tv_tutor1_name"
-                android:gravity="top"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_alignTop="@+id/iv_Tutor1"
-                android:layout_alignParentStart="true" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_tutor1_email"
-                android:layout_below="@id/tv_tutor1_name"
-                android:text="test@pace.edu"
-                android:textSize="15sp"/>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:theme="@style/MyButton"
-                    android:layout_height="wrap_content"
-                    android:text="@string/email"
-                    android:id="@+id/bTutor1"
-                    android:enabled="true"
-                    android:clickable="true" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/MyButton"
-                    android:id="@+id/bRate1"
-                    android:visibility="gone"
-                    android:text="@string/rate"/>
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="105dp"
-                android:layout_height="105dp"
-                android:id="@+id/iv_Tutor1"
-                android:background="@drawable/bushan"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                android:elevation="2dp"/>
-
-        </RelativeLayout>
-
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        style="@style/MyCardViewStyle"
-        app:cardPreventCornerOverlap="false"
-        app:cardUseCompatPadding="true"
-        android:id="@+id/card2"
-        android:clipToPadding="false"
-        android:visibility="visible"
-        android:layout_below="@id/card1">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        <TextView
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
-            android:text="Ian Carvahlo"
-            android:id="@+id/tv_tutor2_name"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_alignTop="@+id/iv_Tutor2"
-            android:layout_alignParentStart="true" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="test@pace.edu"
-            android:layout_below="@id/tv_tutor2_name"
-            android:id="@+id/tv_tutor2_email"
-            android:gravity="center"
-            android:textSize="15sp"/>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:theme="@style/MyButton"
-            android:id="@+id/bTutor2"
-            android:text="@string/email"
-            android:clickable="true"
-            android:enabled="true" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:theme="@style/MyButton"
-                android:id="@+id/bRate2"
-                android:visibility="gone"
-                android:text="@string/rate" />
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="105dp"
-                android:layout_height="105dp"
-                android:background="@drawable/ian"
-                android:id="@+id/iv_Tutor2"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                android:elevation="2dp"/>
-
-        </RelativeLayout>
-
-    </android.support.v7.widget.CardView>
+    </android.support.v7.widget.RecyclerView>
 
     <Button
         android:layout_width="wrap_content"

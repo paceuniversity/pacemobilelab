@@ -10,14 +10,22 @@ import org.joda.time.DateTime;
 public class TutorTimeTable {
 
     String tutor_Dhruvil, tutor_Ian, tutor_Bushan, tutor_Hardik, tutor_Jigar;
+    String[] allTutors;
+
+    Tutor t_Dhruvil, t_Ian, t_Bushan, t_Hardik, t_Jigar;
 
     public TutorTimeTable(Context context){
+
+        String[] tutor = context.getString(R.string.tutor_Dhruvil).split("/");
+        t_Dhruvil = new Tutor(tutor[0], tutor[1]);
 
         tutor_Dhruvil = context.getString(R.string.tutor_Dhruvil);
         tutor_Ian = context.getString(R.string.tutor_Ian);
         tutor_Bushan = context.getString(R.string.tutor_Bhushan);
         tutor_Hardik = context.getString(R.string.tutor_Hardik);
         tutor_Jigar = context.getString(R.string.tutor_Jigar);
+
+        allTutors = new String[]{tutor_Dhruvil, tutor_Ian, tutor_Bushan, tutor_Hardik, tutor_Jigar};
 
     }
 
@@ -64,6 +72,10 @@ public class TutorTimeTable {
         //return new String[]{"Mickey Mouse/mickeymouse@disney.com"};
 
         return null;
+    }
+
+    public String[] getAllTutors(){
+        return allTutors;
     }
 
 }

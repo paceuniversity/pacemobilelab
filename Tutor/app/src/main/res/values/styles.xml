@@ -9,7 +9,6 @@
     </style>
 
     <style name="MyButton" parent="AppTheme">
-        <item name="colorControlHighlight">@color/colorAccent</item>
         <item name="colorButtonNormal">@color/colorPrimary</item>
         <item name="android:textColor">@color/textColorPrimary</item>
         <item name="android:textSize">12sp</item>

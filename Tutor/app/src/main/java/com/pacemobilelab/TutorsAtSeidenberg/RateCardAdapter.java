@@ -12,13 +12,13 @@ import java.util.List;
 
 public class RateCardAdapter extends RecyclerView.Adapter<RateCardAdapter.TutorViewHolder> {
 
-    private List<TutorInfo> tutorList;
+    private List<Tutor> tutorList;
 
-    public RateCardAdapter(List<TutorInfo> tutorList) {
+    public RateCardAdapter(List<Tutor> tutorList) {
         this.tutorList = tutorList;
     }
 
-    public List<TutorInfo> getTutorInfo(){
+    public List<Tutor> getTutorInfo(){
         return tutorList;
     }
 
@@ -29,7 +29,7 @@ public class RateCardAdapter extends RecyclerView.Adapter<RateCardAdapter.TutorV
 
     @Override
     public void onBindViewHolder(TutorViewHolder contactViewHolder, int i) {
-        TutorInfo ti = tutorList.get(i);
+        Tutor ti = tutorList.get(i);
         contactViewHolder.vName.setText(ti.name);
         contactViewHolder.vRating.setText("Average rating: " + ti.rating_avg);
         contactViewHolder.rb.setRating(ti.rating);

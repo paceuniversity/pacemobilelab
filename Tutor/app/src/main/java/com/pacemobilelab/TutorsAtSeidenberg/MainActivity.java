@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +25,7 @@ import com.estimote.sdk.Region;
 
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,10 +42,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     int hiddenSecret;
 
-    TextView title, tv_tutor1_name, tv_tutor1_email, tv_tutor2_name, tv_tutor2_email;
-    CardView cTutor1, cTutor2;
-    ImageView ivTutor1, ivTutor2;
-    Button bTutor1, bTutor2, bRate1, bRate2, bFeedback;
+    RecyclerView recList;
+    GeneralCardAdapter ca;
+
+    TextView title;
+    Button bFeedback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         instantiate();
 
-        refresh();
 
         checkForBlueTooth();
         //startBeaconRanging();
@@ -81,23 +85,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         title = (TextView) findViewById(R.id.tv_title);
 
-        tv_tutor1_name = (TextView) findViewById(R.id.tv_tutor1_name);
-        tv_tutor1_email = (TextView) findViewById(R.id.tv_tutor1_email);
-        tv_tutor2_name = (TextView) findViewById(R.id.tv_tutor2_name);
-        tv_tutor2_email = (TextView) findViewById(R.id.tv_tutor2_email);
-        ivTutor1 = (ImageView) findViewById(R.id.iv_Tutor1);
-        ivTutor2 = (ImageView) findViewById(R.id.iv_Tutor2);
-        bTutor1 = (Button) findViewById(R.id.bTutor1);
-        bTutor2 = (Button) findViewById(R.id.bTutor2);
-        bRate1 = (Button) findViewById(R.id.bRate1);
-        bRate1.setOnClickListener(this);
-        bRate2 = (Button) findViewById(R.id.bRate2);
-        bRate2.setOnClickListener(this);
-        cTutor1 = (CardView) findViewById(R.id.card1);
-        cTutor2 = (CardView) findViewById(R.id.card2);
+        recList = (RecyclerView) findViewById(R.id.cardList_main);
+        recList.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recList.setLayoutManager(llm);
+        ca = new GeneralCardAdapter(createList());
+        recList.setAdapter(ca);
 
         bFeedback = (Button) findViewById(R.id.bFeedback);
         bFeedback.setOnClickListener(this);
+    }
+
+    private List createList() {
+
+        List result = new ArrayList();
+
+        String[] tutors = timeTable.getTutors(DateTime.now());
+        setHeader(tutors);
+
+        for (String t: tutors){
+            String[] info = t.split("/");
+
+            Tutor ti = new Tutor();
+            ti.name = info[0];
+            ti.email = info[1];
+            ti.image_resource = getImageResource(info[0].split(" ")[0]);
+
+            result.add(ti);
+        }
+
+        return result;
     }
 
     /**
@@ -113,81 +131,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onBeaconsDiscovered(Region region, List<Beacon> list) {
                 if (!list.isEmpty()) {
-                    refresh();
+                    //refresh();
                 } else {
                     title.setText("You're outside the reach of the beacons!");
-                    removeCards();
+                    //removeCards();
                 }
             }
         });
     }
 
-    private void refresh(){
+    public void setHeader(String[] tutors){
 
-        removeCards();
-
-        String[] tutors = timeTable.getTutors(DateTime.now());
-        //String[] tutors = new String[]{"Bhushan Surayawanshi/bs38923n@pace.edu", "Ian Carvahlo/ic34882n@pace.edu"}; //For testing
-
-
-        if (tutors == null) {
+        if (tutors == null)
             title.setText(getString(R.string.title_not_available));
+        else if (tutors.length == 1)
+            title.setText(getString(R.string.title_available_single));
+        else
+            title.setText(getString(R.string.title_available_plural));
 
-        } else {
-
-            if (tutors.length > 1)
-                title.setText(getString(R.string.title_available_plural));
-            else
-                title.setText(getString(R.string.title_available_single));
-
-            displayCards(tutors);
-        }
-
-    }
-
-    private void displayCards(String[] tutors){
-
-        String[] tutor;
-
-        if (tutors.length > 1) {
-            tutor = tutors[1].split("/");
-
-            tv_tutor2_name.setText(tutor[0]);
-            tv_tutor2_email.setText(tutor[1]);
-            setCardPhoto(ivTutor2, tutor[0].split(" ")[0]);
-            bTutor2.setTag(tutor[1]);
-
-            bTutor2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    sendEmail(bTutor2.getTag().toString(), "Tutor Question");
-                }
-            });
-
-            cTutor2.setVisibility(View.VISIBLE);
-        }
-
-        tutor = tutors[0].split("/");
-
-        tv_tutor1_name.setText(tutor[0]);
-        tv_tutor1_email.setText(tutor[1]);
-        setCardPhoto(ivTutor1, tutor[0].split(" ")[0]);
-        bTutor1.setTag(tutor[1]);
-
-        bTutor1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendEmail(bTutor1.getTag().toString(), "Tutor Question");
-            }
-        });
-
-        cTutor1.setVisibility(View.VISIBLE);
-
-
-    }
-
-    private void setCardPhoto(ImageView iv, String name){
-        iv.setImageResource(getImageResource(name));
     }
 
     public int getImageResource(String name){
@@ -208,17 +169,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void sendEmail(String emailAddress, String subject){
+    protected void sendEmail(String emailAddress, String subject){
         Intent email = new Intent(Intent.ACTION_SEND);
         email.putExtra(Intent.EXTRA_EMAIL, new String[]{emailAddress});
         email.putExtra(Intent.EXTRA_SUBJECT, subject);
         email.setType("message/rfc822");
         startActivity(Intent.createChooser(email, "Choose an Email client :"));
-    }
-
-    private void removeCards(){
-        cTutor1.setVisibility(View.GONE);
-        cTutor2.setVisibility(View.GONE);
     }
 
     @Override
@@ -233,8 +189,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             prefs.edit().putBoolean("firstrun", false).commit();
         }
-
-        refresh();
 
         //SystemRequirementsChecker.checkWithDefaultDialogs(this);
 
@@ -293,11 +247,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-
-            case R.id.bRate1: case R.id.bRate2:
-                Intent i = new Intent(this, RateTutorsActivity.class);
-                startActivity(i);
-                break;
 
             case R.id.bFeedback:
                 sendEmail(getString(R.string.support_email), "Feedback on Tutor App");

@@ -2,7 +2,6 @@ package com.pacemobilelab.TutorsAtSeidenberg;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +21,7 @@ public class RateTutorsActivity extends AppCompatActivity {
     RecyclerView recList;
     RateCardAdapter ca;
     SwipeRefreshLayout mSwipeRefreshLayout;
+    TutorTimeTable timetable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +31,8 @@ public class RateTutorsActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        timetable = new TutorTimeTable(this);
 
         prefs = getSharedPreferences("com.pacemobilelab.TutorsAtSeidenberg", MODE_PRIVATE);
 
@@ -64,13 +66,12 @@ public class RateTutorsActivity extends AppCompatActivity {
 
         List result = new ArrayList();
 
-        Resources res = getResources();
-        String[] tutors = res.getStringArray(R.array.tutor_strings);
+        String[] tutors = timetable.getAllTutors();
 
         for (String t: tutors){
             String[] info = t.split("/");
 
-            TutorInfo ti = new TutorInfo();
+            Tutor ti = new Tutor();
             ti.name = info[0];
             ti.email = info[1];
             ti.rating = getRating(info[0]);
@@ -117,7 +118,7 @@ public class RateTutorsActivity extends AppCompatActivity {
 
         SharedPreferences.Editor spEditor = this.getPreferences(Context.MODE_PRIVATE).edit();
 
-        for (TutorInfo ti: ca.getTutorInfo()){
+        for (Tutor ti: ca.getTutorInfo()){
             String shortName = ti.name.split(" ")[0];
             spEditor.putFloat("RATING_" + shortName, ti.rating);
         }
@@ -136,7 +137,7 @@ public class RateTutorsActivity extends AppCompatActivity {
 
         SharedPreferences spEditor = this.getPreferences(Context.MODE_PRIVATE);
 
-        for (TutorInfo ti: ca.getTutorInfo()){
+        for (Tutor ti: ca.getTutorInfo()){
             String shortName = ti.name.split(" ")[0];
             float r = spEditor.getFloat("RATING_" + shortName, ti.rating);
             if (ti.rating != r)

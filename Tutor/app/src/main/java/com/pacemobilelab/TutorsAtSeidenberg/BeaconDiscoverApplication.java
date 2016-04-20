@@ -1,4 +1,4 @@
-package com.example.jangerhard.tutor;
+package com.pacemobilelab.TutorsAtSeidenberg;
 
 import android.app.Application;
 import android.app.Notification;
@@ -10,7 +10,6 @@ import android.content.Intent;
 import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
-
 import org.joda.time.DateTime;
 
 import java.util.List;

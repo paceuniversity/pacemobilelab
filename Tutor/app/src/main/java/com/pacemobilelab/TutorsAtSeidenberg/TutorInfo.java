@@ -1,4 +1,4 @@
-package com.example.jangerhard.tutor;
+package com.pacemobilelab.TutorsAtSeidenberg;
 
 public class TutorInfo {
 

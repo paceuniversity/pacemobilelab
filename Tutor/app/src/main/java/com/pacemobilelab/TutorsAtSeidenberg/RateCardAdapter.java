@@ -10,11 +10,11 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class CardAdapter extends RecyclerView.Adapter<CardAdapter.TutorViewHolder> {
+public class RateCardAdapter extends RecyclerView.Adapter<RateCardAdapter.TutorViewHolder> {
 
     private List<TutorInfo> tutorList;
 
-    public CardAdapter(List<TutorInfo> tutorList) {
+    public RateCardAdapter(List<TutorInfo> tutorList) {
         this.tutorList = tutorList;
     }
 
@@ -31,7 +31,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.TutorViewHolde
     public void onBindViewHolder(TutorViewHolder contactViewHolder, int i) {
         TutorInfo ti = tutorList.get(i);
         contactViewHolder.vName.setText(ti.name);
-        contactViewHolder.vEmail.setText(ti.email);
+        contactViewHolder.vRating.setText("Average rating: " + ti.rating_avg);
         contactViewHolder.rb.setRating(ti.rating);
         contactViewHolder.vImage.setImageResource(ti.image_resource);
     }
@@ -48,7 +48,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.TutorViewHolde
     public class TutorViewHolder extends RecyclerView.ViewHolder {
 
         protected TextView vName;
-        protected TextView vEmail;
+        protected TextView vRating;
         protected ImageView vImage;
         protected RatingBar rb;
         protected View v;
@@ -56,9 +56,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.TutorViewHolde
         public TutorViewHolder(final View v) {
             super(v);
             this.v = v;
-            vName =  (TextView) v.findViewById(R.id.tv_tutor_name_general);
-            vEmail = (TextView)  v.findViewById(R.id.tv_tutor_email_general);
-            vImage = (ImageView) v.findViewById(R.id.iv_tutor_general);
+            vName =  (TextView) v.findViewById(R.id.tv_tutor_name_rating);
+            vRating =  (TextView) v.findViewById(R.id.tv_tutor_avg_rating_rating);
+            vImage = (ImageView) v.findViewById(R.id.iv_tutor_rating);
             rb = (RatingBar) v.findViewById(R.id.ratingbar);
             rb.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
                 @Override

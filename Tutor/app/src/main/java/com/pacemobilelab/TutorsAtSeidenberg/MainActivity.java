@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        prefs = getSharedPreferences("com.example.jangerhard", MODE_PRIVATE);
+        prefs = getSharedPreferences("com.pacemobilelab.TutorsAtSeidenberg", MODE_PRIVATE);
 
         hiddenSecret = 0;
         mToolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,9 +16,12 @@ import java.util.List;
 
 public class RateTutorsActivity extends AppCompatActivity {
 
+    SharedPreferences prefs = null;
+
     Toolbar mToolbar;
     RecyclerView recList;
-    CardAdapter ca;
+    RateCardAdapter ca;
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +32,32 @@ public class RateTutorsActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        recList = (RecyclerView) findViewById(R.id.cardList);
+        prefs = getSharedPreferences("com.pacemobilelab.TutorsAtSeidenberg", MODE_PRIVATE);
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        mSwipeRefreshLayout.setColorSchemeColors(R.color.colorAccent);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshData();
+            }
+        });
+
+        recList = (RecyclerView) findViewById(R.id.cardList_rating);
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
-        ca = new CardAdapter(createList());
+        refreshData();
+
+    }
+
+    private void refreshData(){
+        ca = new RateCardAdapter(createList());
         recList.setAdapter(ca);
         recList.addItemDecoration(new SimpleDividerItemDecoration(this));
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     private List createList() {
@@ -53,6 +74,7 @@ public class RateTutorsActivity extends AppCompatActivity {
             ti.name = info[0];
             ti.email = info[1];
             ti.rating = getRating(info[0]);
+            ti.rating_avg = (float) 1.5;
             ti.image_resource = getImageResource(info[0]);
 
             result.add(ti);
@@ -71,7 +93,7 @@ public class RateTutorsActivity extends AppCompatActivity {
         String shortName = name.split(" ")[0];
 
         SharedPreferences sp = this.getPreferences(MODE_PRIVATE);
-        return sp.getFloat("RATING_"+shortName, (float)3.5);
+        return sp.getFloat("RATING_" + shortName, (float)0.5);
     }
 
     public int getImageResource(String name){
@@ -128,11 +150,24 @@ public class RateTutorsActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        if (!hasChanged()){
-
+        if (hasChanged()){
+            Toast.makeText(this, "You changed your ratings!", Toast.LENGTH_SHORT).show();
+            saveStars();
         }
-        Toast.makeText(this, "You changed your ratings!", Toast.LENGTH_SHORT).show();
-        saveStars();
-
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (prefs.getBoolean("firstrun", true)) {
+            Toast.makeText(this, "First run", Toast.LENGTH_SHORT).show();
+            saveStars();
+            prefs.edit().putBoolean("firstrun", false).commit();
+        }
+    }
+
+
+
+
 }

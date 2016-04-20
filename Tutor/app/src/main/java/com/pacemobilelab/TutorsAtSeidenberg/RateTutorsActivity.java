@@ -1,27 +1,17 @@
-package com.example.jangerhard.tutor;
+package com.pacemobilelab.TutorsAtSeidenberg;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Toast;
-
-import com.example.jangerhard.tutor.CardAdapter;
-import com.example.jangerhard.tutor.R;
-import com.example.jangerhard.tutor.SimpleDividerItemDecoration;
-import com.example.jangerhard.tutor.TutorInfo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UnknownFormatConversionException;
 
 public class RateTutorsActivity extends AppCompatActivity {
 

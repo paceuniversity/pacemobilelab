@@ -1,7 +1,6 @@
-package com.example.jangerhard.tutor;
+package com.pacemobilelab.TutorsAtSeidenberg;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.joda.time.DateTime;
 

@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
+import com.estimote.sdk.SystemRequirementsChecker;
 
 import org.joda.time.DateTime;
 
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,8 +77,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         instantiate();
 
-
-        checkForBlueTooth();
         //startBeaconRanging();
 
     }
@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             prefs.edit().putBoolean("firstrun", false).commit();
         }
 
-        //SystemRequirementsChecker.checkWithDefaultDialogs(this);
+        SystemRequirementsChecker.checkWithDefaultDialogs(this);
 
 //        beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
 //            @Override
@@ -241,21 +241,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bFeedback:
                 sendEmail(getString(R.string.support_email), "Feedback on Tutor App");
                 break;
-        }
-    }
-
-    private void checkForBlueTooth() {
-
-        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (mBluetoothAdapter == null) {
-            showAlertDialog("Bluetooth not supported!", "It appears your device does not support " +
-                    "bluetooth, and you will therefore not get the full experience of this app..");
-        } else {
-            if (!mBluetoothAdapter.isEnabled()) {
-                // Bluetooth is not enable :)
-                showAlertDialog("Bluetooth not active!", "If you want to receive notifications, " +
-                        "please activate your bluetooth!");
-            }
         }
     }
 

@@ -10,6 +10,7 @@ import android.content.Intent;
 import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
+
 import org.joda.time.DateTime;
 
 import java.util.List;
@@ -30,22 +31,38 @@ public class BeaconDiscoverApplication extends Application {
         beaconManager.setMonitoringListener(new BeaconManager.MonitoringListener() {
             @Override
             public void onEnteredRegion(Region region, List<Beacon> list) {
-                String[] tutors = timeTable.getTutors(DateTime.now());
 
+                List tutors = timeTable.getTutors(DateTime.now());
                 //String[] tutors = new String[]{"Ian Carvahlo/ic34882n@pace.edu", "Bhushan Surayawanshi/bs38923n@pace.edu"}; //For testing
 
-                if (tutors == null)
-                    showNotification("Welcome to the common area!","No one available right now.");
 
-                else if (tutors.length > 1)
-                    showNotification("Welcome to the common area!","Available tutors right now: "
-                            + tutors[0].split("/")[0].split(" ")[0] //Returns first names only
-                            + " and "
-                            + tutors[1].split("/")[0].split(" ")[0]); //Returns first names only
-                else
-                    showNotification("Welcome to the common area!","Available tutor right now: "
-                            + tutors[0].split("/")[0].split(" ")[0]); //Returns first names only
+                switch (tutors.size()) {
+                    case 0:
+                        showNotification("Welcome to the common area!",
+                                "No one available right now.");
+                        break;
+                    case 1:
+                        showNotification("Welcome to the common area!",
+                                "Available tutor right now: " +
+                                        ((Tutor) tutors.get(0)).name.split(" ")[0]);
+                        break;
+                    default:
+                        String txt = "Available tutors right now: ";
+
+                        for (int i = 0; i < tutors.size(); i++) {
+                            txt += ((Tutor) tutors.get(0)).name.split(" ")[0];
+
+                            if (i==tutors.size()-1)
+                                break;
+
+                            txt += " and ";
+                        }
+
+                        showNotification("Welcome to the common area!", txt);
+
+                }
             }
+
             @Override
             public void onExitedRegion(Region region) {
                 //showNotification("Exited!","You left the beacon region!");
@@ -67,7 +84,7 @@ public class BeaconDiscoverApplication extends Application {
         Intent notifyIntent = new Intent(this, MainActivity.class);
         notifyIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivities(this, 0,
-                new Intent[] { notifyIntent }, PendingIntent.FLAG_UPDATE_CURRENT);
+                new Intent[]{notifyIntent}, PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification = new Notification.Builder(this)
                 .setSmallIcon(R.drawable.ic_teacher_cutout)
                 .setContentTitle(title)

@@ -13,33 +13,31 @@
     tools:showIn="@layout/activity_main">
 
     <TextView
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MAIN TITLE"
-        android:id="@+id/tv_title"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp" />
+        android:text="MAIN TITLE"
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cardList_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_title"
-        >
-
-    </android.support.v7.widget.RecyclerView>
+        android:layout_above="@+id/bFeedback"/>
 
     <Button
+        android:id="@+id/bFeedback"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/bFeedback"
-        android:text="@string/title_feedback"
-        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:text="@string/title_feedback" />
 
 </RelativeLayout>

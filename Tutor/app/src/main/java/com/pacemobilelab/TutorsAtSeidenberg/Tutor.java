@@ -7,6 +7,7 @@ public class Tutor {
     protected int image_resource;
     protected float rating;
     protected float rating_avg;
+    protected WorkSchedule sch;
     protected static final String NAME_PREFIX = "Name_";
     protected static final String EMAIL_PREFIX = "email_";
     protected static final String IMAGE_PREFIX = "image_";
@@ -22,6 +23,24 @@ public class Tutor {
         image_resource = getImageResource(name.split(" ")[0]);
         rating = 0.5f;
         rating_avg = 1.5f;
+
+        sch = new WorkSchedule();
+    }
+
+    public void addWork(int day, int startHour, int finishHour){
+        try {
+            sch.addTime(day, startHour,finishHour);
+        } catch (WorkSchedule.OutOfBoundsExeption outOfBoundsExeption) {
+            outOfBoundsExeption.printStackTrace();
+        }
+    }
+
+    public boolean isWorking(int day, int hour){
+        return sch.isWorking(day,hour);
+    }
+
+    public WorkSchedule getSch(){
+        return sch;
     }
 
     public int getImageResource(String name){

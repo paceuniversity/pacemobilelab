@@ -56,32 +56,10 @@ public class RateTutorsActivity extends AppCompatActivity {
     }
 
     private void refreshData(){
-        ca = new RateCardAdapter(createList());
+        ca = new RateCardAdapter(timetable.getAllTutors());
         recList.setAdapter(ca);
         recList.addItemDecoration(new SimpleDividerItemDecoration(this));
         mSwipeRefreshLayout.setRefreshing(false);
-    }
-
-    private List createList() {
-
-        List result = new ArrayList();
-
-        String[] tutors = timetable.getAllTutors();
-
-        for (String t: tutors){
-            String[] info = t.split("/");
-
-            Tutor ti = new Tutor();
-            ti.name = info[0];
-            ti.email = info[1];
-            ti.rating = getRating(info[0]);
-            ti.rating_avg = (float) 1.5;
-            ti.image_resource = getImageResource(info[0]);
-
-            result.add(ti);
-        }
-
-        return result;
     }
 
     /**

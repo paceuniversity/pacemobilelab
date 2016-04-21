@@ -90,32 +90,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
-        ca = new GeneralCardAdapter(createList());
+
+        List r = timeTable.getTutors(DateTime.now());
+        //r = timeTable.getTestTutors();
+
+        ca = new GeneralCardAdapter(r);
+
         recList.setAdapter(ca);
+
+        setHeader(r.size());
 
         bFeedback = (Button) findViewById(R.id.bFeedback);
         bFeedback.setOnClickListener(this);
-    }
-
-    private List createList() {
-
-        List result = new ArrayList();
-
-        String[] tutors = timeTable.getTutors(DateTime.now());
-        setHeader(tutors);
-
-        for (String t: tutors){
-            String[] info = t.split("/");
-
-            Tutor ti = new Tutor();
-            ti.name = info[0];
-            ti.email = info[1];
-            ti.image_resource = getImageResource(info[0].split(" ")[0]);
-
-            result.add(ti);
-        }
-
-        return result;
     }
 
     /**
@@ -140,36 +126,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    public void setHeader(String[] tutors){
+    public void setHeader(int size) {
 
-        if (tutors == null)
-            title.setText(getString(R.string.title_not_available));
-        else if (tutors.length == 1)
-            title.setText(getString(R.string.title_available_single));
-        else
-            title.setText(getString(R.string.title_available_plural));
+        switch (size) {
+            case 0:
+                title.setText(getString(R.string.title_not_available));
+                break;
+            case 1:
+                title.setText(getString(R.string.title_available_single));
+                break;
+            default:
+                title.setText(getString(R.string.title_available_plural));
 
+        }
     }
 
-    public int getImageResource(String name){
+    public int getImageResource(String name) {
         switch (name) {
 
             case "Dhruvil":
                 return R.drawable.dhruvil;
             case "Bhushan":
-                return(R.drawable.bushan);
+                return (R.drawable.bushan);
             case "Ian":
-                return(R.drawable.ian);
+                return (R.drawable.ian);
             case "Jigar":
-                return(R.drawable.jigar);
+                return (R.drawable.jigar);
             case "Hardik":
-                return(R.drawable.hardik);
+                return (R.drawable.hardik);
             default:
-                return(R.drawable.mickey);
+                return (R.drawable.mickey);
         }
     }
 
-    protected void sendEmail(String emailAddress, String subject){
+    protected void sendEmail(String emailAddress, String subject) {
         Intent email = new Intent(Intent.ACTION_SEND);
         email.putExtra(Intent.EXTRA_EMAIL, new String[]{emailAddress});
         email.putExtra(Intent.EXTRA_SUBJECT, subject);
@@ -228,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
-    private void showAlertDialog(String title, String message){
+    private void showAlertDialog(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(R.mipmap.ic_new_launcher);
         builder.setTitle(title);
@@ -246,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.bFeedback:
                 sendEmail(getString(R.string.support_email), "Feedback on Tutor App");

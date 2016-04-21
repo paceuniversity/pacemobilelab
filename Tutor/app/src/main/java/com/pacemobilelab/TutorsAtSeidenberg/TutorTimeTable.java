@@ -4,77 +4,92 @@ import android.content.Context;
 
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * TODO: Create a better way of instantiating tutors and updating the schedule.
  */
 public class TutorTimeTable {
+    public final int MONDAY=0, TUESDAY=1, WEDNESDAY=2, THURSDAY=3, FRIDAY=4;
 
-    String tutor_Dhruvil, tutor_Ian, tutor_Bushan, tutor_Hardik, tutor_Jigar;
-    String[] allTutors;
+    List allTutors;
 
-    Tutor t_Dhruvil, t_Ian, t_Bushan, t_Hardik, t_Jigar;
+    public TutorTimeTable(Context context) {
 
-    public TutorTimeTable(Context context){
+        allTutors = new ArrayList();
 
-        String[] tutor = context.getString(R.string.tutor_Dhruvil).split("/");
-        t_Dhruvil = new Tutor(tutor[0], tutor[1]);
+        String[] tutorStrings = context.getResources().getStringArray(R.array.tutor_strings);
 
-        tutor_Dhruvil = context.getString(R.string.tutor_Dhruvil);
-        tutor_Ian = context.getString(R.string.tutor_Ian);
-        tutor_Bushan = context.getString(R.string.tutor_Bhushan);
-        tutor_Hardik = context.getString(R.string.tutor_Hardik);
-        tutor_Jigar = context.getString(R.string.tutor_Jigar);
+        //Bhushan
+        Tutor t = new Tutor(tutorStrings[0].split("/")[0], tutorStrings[0].split("/")[1]);
+        t.addWork(MONDAY, 12, 17);
+        t.addWork(TUESDAY, 12, 17);
+        allTutors.add(t);
 
-        allTutors = new String[]{tutor_Dhruvil, tutor_Ian, tutor_Bushan, tutor_Hardik, tutor_Jigar};
+        //Ian
+        t = new Tutor(tutorStrings[1].split("/")[0], tutorStrings[1].split("/")[1]);
+        t.addWork(WEDNESDAY, 15, 18);
+        t.addWork(THURSDAY, 10, 15);
+        t.addWork(FRIDAY, 10, 12);
+        allTutors.add(t);
+
+        //Jigar
+        t = new Tutor(tutorStrings[2].split("/")[0], tutorStrings[2].split("/")[1]);
+        t.addWork(WEDNESDAY, 16, 19);
+        allTutors.add(t);
+
+        //Dhruvil
+        t = new Tutor(tutorStrings[3].split("/")[0], tutorStrings[3].split("/")[1]);
+        t.addWork(WEDNESDAY, 12, 16);
+        allTutors.add(t);
+
+        //Hardik
+        t = new Tutor(tutorStrings[4].split("/")[0], tutorStrings[4].split("/")[1]);
+        t.addWork(THURSDAY, 12, 17);
+        t.addWork(FRIDAY, 12, 17);
+        allTutors.add(t);
 
     }
 
-    public String[] getTutors(DateTime rightNow) {
+    /**
+     * TODO: MUST BE IMPROVED!!
+     *
+     * @param rightNow
+     * @return
+     */
+    public List getTutors(DateTime rightNow) {
+
+        List result = new ArrayList();
 
         int day = rightNow.getDayOfWeek();
         int hour = rightNow.getHourOfDay();
-        //int minute = rightNow.getMinuteOfHour();
 
-        switch (day){
-            case 1: case 2: //Monday and Tuesday
-                if (hour >= 12 && hour < 17 )
-                    return new String[] {tutor_Bushan};
-                break;
-            case 3: //Wednesday
-                if (hour >= 15 && hour < 16 )
-                    return new String[] {tutor_Dhruvil, tutor_Ian};
-                else if (hour >= 16 && hour < 18 )
-                    return new String[] {tutor_Ian, tutor_Jigar};
-                else if (hour >= 12 && hour < 16 )
-                    return new String[] {tutor_Dhruvil};
-                if (hour >= 16 && hour < 19 )
-                    return new String[] {tutor_Jigar};
-                break;
-            case 4: //Thursday
-                if (hour >= 10 && hour < 12 )
-                    return new String[] {tutor_Ian};
-                else if (hour >= 12 && hour < 15 )
-                    return new String[] {tutor_Hardik, tutor_Ian};
-                else if (hour >= 15 && hour < 17 )
-                    return new String[] {tutor_Hardik};
-                break;
-            case 5: //Friday
-                if (hour >= 10 && hour < 12 )
-                    return new String[] {tutor_Ian};
-                else if (hour >= 12 && hour < 13 )
-                    return new String[] {tutor_Hardik, tutor_Ian};
-                else if (hour >= 13 && hour < 17 )
-                    return new String[] {tutor_Hardik};
-                break;
-
+        for (int i = 0; i < allTutors.size(); i++) {
+            if (isWorking(day, allTutors.get(i), hour))
+                result.add(allTutors.get(i));
         }
 
-        //return new String[]{"Mickey Mouse/mickeymouse@disney.com"};
-
-        return null;
+        return result;
     }
 
-    public String[] getAllTutors(){
+    public List getTestTutors(){
+        List l = new ArrayList();
+
+        l.add(allTutors.get(1));
+        l.add(allTutors.get(2));
+
+        return l;
+    }
+
+    private boolean isWorking(int day, Object o, int hour) {
+
+        Tutor t = (Tutor) o;
+
+        return t.isWorking(day, hour);
+    }
+
+    public List getAllTutors() {
         return allTutors;
     }
 

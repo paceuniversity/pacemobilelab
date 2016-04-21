@@ -12,7 +12,7 @@ public class WorkSchedule {
 
     final int START=9, END=20;
 
-    boolean[][] calendar = new boolean[24][5];
+    boolean[][] calendar = new boolean[5][24];
 
     public WorkSchedule(){
         clear();
@@ -32,12 +32,12 @@ public class WorkSchedule {
                 "to be between 0" + START + ":00 and " + END + ":00" );
 
         for (int i=startHour; i<endHour; i++)
-            calendar[i][day] = true;
+            calendar[day][i] = true;
 
     }
 
     public boolean isWorking(int day, int hour){
-        return calendar[hour][day];
+        return calendar[day][hour];
     }
 
     class OutOfBoundsExeption extends Exception

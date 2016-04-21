@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_tutor_name_rating"
             android:text="Average rating: 3.68"
-            android:visibility="gone"
+            android:visibility="visible"
             android:textSize="15sp" />
 
         <LinearLayout

@@ -22,6 +22,11 @@ import android.widget.Toast;
 import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
+import com.estimote.sdk.SystemRequirementsChecker;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import org.joda.time.DateTime;
 
@@ -45,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     RecyclerView recList;
     GeneralCardAdapter ca;
 
+    Firebase mRef;
     TextView title;
     Button bFeedback;
 
@@ -54,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         prefs = getSharedPreferences("com.pacemobilelab.TutorsAtSeidenberg", MODE_PRIVATE);
+
+        setupFirebase();
 
         hiddenSecret = 0;
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -75,9 +83,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         instantiate();
 
-
-        checkForBlueTooth();
         //startBeaconRanging();
+
+    }
+
+    private void setupFirebase() {
+
+        mRef = new Firebase("https://tutorsatseidenberg.firebaseio.com/welcome");
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                title.setText(dataSnapshot.getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
     }
 
@@ -180,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             prefs.edit().putBoolean("firstrun", false).commit();
         }
 
-        //SystemRequirementsChecker.checkWithDefaultDialogs(this);
+        SystemRequirementsChecker.checkWithDefaultDialogs(this);
 
 //        beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
 //            @Override
@@ -233,7 +256,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onPause();
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -243,20 +265,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
-
-    private void checkForBlueTooth() {
-
-        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (mBluetoothAdapter == null) {
-            showAlertDialog("Bluetooth not supported!", "It appears your device does not support " +
-                    "bluetooth, and you will therefore not get the full experience of this app..");
-        } else {
-            if (!mBluetoothAdapter.isEnabled()) {
-                // Bluetooth is not enable :)
-                showAlertDialog("Bluetooth not active!", "If you want to receive notifications, " +
-                        "please activate your bluetooth!");
-            }
-        }
-    }
-
 }

@@ -10,13 +10,14 @@ import android.content.Intent;
 import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
+import com.firebase.client.Firebase;
 
 import org.joda.time.DateTime;
 
 import java.util.List;
 import java.util.UUID;
 
-public class BeaconDiscoverApplication extends Application {
+public class mainApplication extends Application {
 
     private BeaconManager beaconManager;
     private TutorTimeTable timeTable;
@@ -24,6 +25,7 @@ public class BeaconDiscoverApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Firebase.setAndroidContext(this);
 
         beaconManager = new BeaconManager(getApplicationContext());
         timeTable = new TutorTimeTable(getApplicationContext());
@@ -33,8 +35,7 @@ public class BeaconDiscoverApplication extends Application {
             public void onEnteredRegion(Region region, List<Beacon> list) {
 
                 List tutors = timeTable.getTutors(DateTime.now());
-                //String[] tutors = new String[]{"Ian Carvahlo/ic34882n@pace.edu", "Bhushan Surayawanshi/bs38923n@pace.edu"}; //For testing
-
+                //tutors = timeTable.getTestTutors();
 
                 switch (tutors.size()) {
                     case 0:

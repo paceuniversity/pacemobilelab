@@ -2,19 +2,40 @@ package com.pacemobilelab.TutorsAtSeidenberg;
 
 public class Tutor {
 
-    protected String name;
-    protected String email;
-    protected int image_resource;
-    protected float rating;
-    protected float rating_avg;
-    protected WorkSchedule sch;
-    protected static final String NAME_PREFIX = "Name_";
-    protected static final String EMAIL_PREFIX = "email_";
-    protected static final String IMAGE_PREFIX = "image_";
-    protected static final String RATING_PREFIX = "rating_";
-    protected static final String RATING_AVG_PREFIX = "rating_avg_";
+    String name;
+    String email;
+    int image_resource;
+    float rating;
+    float rating_avg;
+    WorkSchedule sch;
 
-    public Tutor(){}
+    public String getName() {
+        return name;
+    }
+
+    public int getImage_resource() {
+        return image_resource;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public float getRating_avg() {
+        return rating_avg;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public Tutor(){
+        image_resource = getImageResource(name.split(" ")[0]);
+        rating = 0.5f;
+        rating_avg = 1.5f;
+
+        sch = new WorkSchedule();
+    }
 
     public Tutor(String name, String email){
 
@@ -43,7 +64,7 @@ public class Tutor {
         return sch;
     }
 
-    public int getImageResource(String name){
+    private int getImageResource(String name){
         switch (name) {
 
             case "Dhruvil":

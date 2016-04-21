@@ -22,6 +22,10 @@ import android.widget.Toast;
 import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import org.joda.time.DateTime;
 
@@ -45,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     RecyclerView recList;
     GeneralCardAdapter ca;
 
+    Firebase mRef;
     TextView title;
     Button bFeedback;
 
@@ -54,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         prefs = getSharedPreferences("com.pacemobilelab.TutorsAtSeidenberg", MODE_PRIVATE);
+
+        setupFirebase();
 
         hiddenSecret = 0;
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -78,6 +85,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         checkForBlueTooth();
         //startBeaconRanging();
+
+    }
+
+    private void setupFirebase() {
+
+        mRef = new Firebase("https://tutorsatseidenberg.firebaseio.com/schedule");
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
     }
 

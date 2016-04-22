@@ -7,7 +7,7 @@ public class Tutor {
     int imageResource;
     float rating;
     float rating_avg;
-    //WorkSchedule sch;
+    boolean atWork;
 
     public Tutor(){}
 
@@ -31,6 +31,5 @@ public class Tutor {
         return rating;
     }
 
-    //public WorkSchedule getSch(){return sch;}
-
+    public boolean isAtWork() { return atWork;}
 }

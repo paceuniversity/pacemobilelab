@@ -76,7 +76,7 @@ public class RateTutorsActivity extends AppCompatActivity {
 
         spEditor.putFloat("RATING_" + shortName, rating);
 
-        spEditor.commit();
+        spEditor.apply();
 
     }
 
@@ -96,15 +96,20 @@ public class RateTutorsActivity extends AppCompatActivity {
                 R.layout.card_layout_rating,
                 TutorViewHolder.class,
                 mRef) {
+
             @Override
             public void populateViewHolder(TutorViewHolder tutorViewHolder, final Tutor tutor, int position) {
+
                 tutorViewHolder.vName.setText(tutor.name);
                 tutorViewHolder.vRating.setText("Average rating: " + tutor.rating_avg);
                 tutorViewHolder.rb.setRating(getRating(tutor.name));
                 try {
-                    tutorViewHolder.vImage.setImageResource(tutor.imageResource);
-                } catch (Resources.NotFoundException e){
-                    tutorViewHolder.vImage.setImageResource(R.drawable.mickey);
+                    tutorViewHolder.vImage.setBackgroundResource(tutor.imageResource);
+                } catch (Resources.NotFoundException e) {
+                    if (tutor.imageResource == 1234)
+                        tutorViewHolder.vImage.setBackgroundResource(R.drawable.mickey);
+                    else
+                        tutorViewHolder.vImage.setBackgroundResource(R.drawable.noimage);
                 }
 
                 tutorViewHolder.rb.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {

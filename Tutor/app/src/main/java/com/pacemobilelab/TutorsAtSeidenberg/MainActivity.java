@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -25,6 +26,7 @@ import com.estimote.sdk.SystemRequirementsChecker;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.FirebaseException;
 import com.firebase.client.ValueEventListener;
 import com.firebase.ui.FirebaseRecyclerAdapter;
 
@@ -118,13 +120,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ) {
             @Override
             public void populateViewHolder(TutorViewHolder tutorViewHolder, final Tutor tutor, int position) {
+
                 tutorViewHolder.vName.setText(tutor.name);
                 tutorViewHolder.vEmail.setText(tutor.email);
 
                 try {
-                    tutorViewHolder.vImage.setImageResource(tutor.imageResource);
-                } catch (Resources.NotFoundException e){
-                    tutorViewHolder.vImage.setImageResource(R.drawable.mickey);
+                    tutorViewHolder.vImage.setBackgroundResource(tutor.imageResource);
+                } catch (Resources.NotFoundException e) {
+                    if (tutor.imageResource == 1234)
+                        tutorViewHolder.vImage.setBackgroundResource(R.drawable.mickey);
+                    else
+                        tutorViewHolder.vImage.setBackgroundResource(R.drawable.noimage);
                 }
 
                 tutorViewHolder.bRate.setOnClickListener(new View.OnClickListener() {
@@ -136,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 tutorViewHolder.bEmail.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        sendEmail(tutor.email,"Tutor Question");
+                        sendEmail(tutor.email, "Tutor Question");
                     }
                 });
             }
@@ -178,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         builder.show();
     }
 
-    public void openRatePage(){
+    public void openRatePage() {
         Intent i = new Intent(this, RateTutorsActivity.class);
         startActivity(i);
     }
@@ -206,9 +212,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         protected ImageView vImage;
         protected Button bRate;
         protected Button bEmail;
+        protected View v;
 
         public TutorViewHolder(View v) {
             super(v);
+            this.v = v;
             vName = (TextView) v.findViewById(R.id.tv_tutor_name_general);
             vEmail = (TextView) v.findViewById(R.id.tv_tutor_email_general);
             vImage = (ImageView) v.findViewById(R.id.iv_tutor_general);

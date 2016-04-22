@@ -14,13 +14,13 @@ import com.firebase.client.Firebase;
 
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class mainApplication extends Application {
 
     private BeaconManager beaconManager;
-    private TutorTimeTable timeTable;
 
     @Override
     public void onCreate() {
@@ -28,13 +28,13 @@ public class mainApplication extends Application {
         Firebase.setAndroidContext(this);
 
         beaconManager = new BeaconManager(getApplicationContext());
-        timeTable = new TutorTimeTable(getApplicationContext());
 
         beaconManager.setMonitoringListener(new BeaconManager.MonitoringListener() {
             @Override
             public void onEnteredRegion(Region region, List<Beacon> list) {
 
-                List tutors = timeTable.getTutors(DateTime.now());
+                List tutors = new ArrayList();
+                tutors.add(new Tutor().name="Ian");
                 //tutors = timeTable.getTestTutors();
 
                 switch (tutors.size()) {

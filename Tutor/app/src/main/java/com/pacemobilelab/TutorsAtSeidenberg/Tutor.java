@@ -4,17 +4,19 @@ public class Tutor {
 
     String name;
     String email;
-    int image_resource;
+    int imageResource;
     float rating;
     float rating_avg;
-    WorkSchedule sch;
+    //WorkSchedule sch;
+
+    public Tutor(){}
 
     public String getName() {
         return name;
     }
 
-    public int getImage_resource() {
-        return image_resource;
+    public int getImageResource() {
+        return imageResource;
     }
 
     public String getEmail() {
@@ -29,57 +31,6 @@ public class Tutor {
         return rating;
     }
 
-    public Tutor(){
-        image_resource = getImageResource(name.split(" ")[0]);
-        rating = 0.5f;
-        rating_avg = 1.5f;
-
-        sch = new WorkSchedule();
-    }
-
-    public Tutor(String name, String email){
-
-        this.name = name;
-        this.email = email;
-        image_resource = getImageResource(name.split(" ")[0]);
-        rating = 0.5f;
-        rating_avg = 1.5f;
-
-        sch = new WorkSchedule();
-    }
-
-    public void addWork(int day, int startHour, int finishHour){
-        try {
-            sch.addTime(day, startHour,finishHour);
-        } catch (WorkSchedule.OutOfBoundsExeption outOfBoundsExeption) {
-            outOfBoundsExeption.printStackTrace();
-        }
-    }
-
-    public boolean isWorking(int day, int hour){
-        return sch.isWorking(day,hour);
-    }
-
-    public WorkSchedule getSch(){
-        return sch;
-    }
-
-    private int getImageResource(String name){
-        switch (name) {
-
-            case "Dhruvil":
-                return R.drawable.dhruvil;
-            case "Bhushan":
-                return(R.drawable.bushan);
-            case "Ian":
-                return(R.drawable.ian);
-            case "Jigar":
-                return(R.drawable.jigar);
-            case "Hardik":
-                return(R.drawable.hardik);
-            default:
-                return(R.drawable.mickey);
-        }
-    }
+    //public WorkSchedule getSch(){return sch;}
 
 }

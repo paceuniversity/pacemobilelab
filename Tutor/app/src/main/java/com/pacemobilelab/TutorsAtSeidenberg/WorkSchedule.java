@@ -5,47 +5,11 @@ package com.pacemobilelab.TutorsAtSeidenberg;
  */
 public class WorkSchedule {
 
-    /**
-     * 5 days (Monday to Friday)
-     * 11 hours (from 9:00 to 20:00)
-     */
+    String[] schedule;
 
-    final int START=9, END=20;
+    public WorkSchedule(){}
 
-    boolean[][] calendar = new boolean[5][24];
-
-    public WorkSchedule(){
-        clear();
+    public String[] getSchedule() {
+        return schedule;
     }
-
-    public void clear(){
-        for (boolean[] hours: calendar)
-            for (boolean hour: hours)
-                hour = false;
-    }
-
-    public void addTime(int day, int startHour, int endHour) throws OutOfBoundsExeption {
-
-        if (startHour < START || startHour > END) throw new OutOfBoundsExeption("Start hour " +
-                "has to be between 0" + START + ":00 and " + END + ":00" );
-        if (endHour < START || endHour > END) throw new OutOfBoundsExeption("End hour has " +
-                "to be between 0" + START + ":00 and " + END + ":00" );
-
-        for (int i=startHour; i<endHour; i++)
-            calendar[day][i] = true;
-
-    }
-
-    public boolean isWorking(int day, int hour){
-        return calendar[day][hour];
-    }
-
-    class OutOfBoundsExeption extends Exception
-    {
-        public OutOfBoundsExeption(String message)
-        {
-            super(message);
-        }
-    }
-
 }

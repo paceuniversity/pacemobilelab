@@ -3,6 +3,7 @@ package com.pacemobilelab.TutorsAtSeidenberg;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,39 +17,29 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.estimote.sdk.Beacon;
-import com.estimote.sdk.BeaconManager;
-import com.estimote.sdk.Region;
 import com.estimote.sdk.SystemRequirementsChecker;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.firebase.ui.FirebaseRecyclerAdapter;
 
-import org.joda.time.DateTime;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     SharedPreferences prefs = null;
 
     private Toolbar mToolbar;
-    private Menu menu;
-
-    private BeaconManager beaconManager;
-    private Region region;
-    private TutorTimeTable timeTable;
 
     int hiddenSecret;
 
     RecyclerView recList;
-    GeneralCardAdapter ca;
+
+    FirebaseRecyclerAdapter<Tutor, TutorViewHolder> adapter;
 
     Firebase mRef;
     TextView title;
@@ -60,8 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         prefs = getSharedPreferences("com.pacemobilelab.TutorsAtSeidenberg", MODE_PRIVATE);
-
-        setupFirebase();
+        mRef = new Firebase("https://tutorsatseidenberg.firebaseio.com/");
 
         hiddenSecret = 0;
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -79,107 +69,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        timeTable = new TutorTimeTable(this);
-
         instantiate();
-
-        //startBeaconRanging();
-
-    }
-
-    private void setupFirebase() {
-
-        mRef = new Firebase("https://tutorsatseidenberg.firebaseio.com/welcome");
-        mRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                title.setText(dataSnapshot.getValue(String.class));
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-
     }
 
     private void instantiate() {
 
         title = (TextView) findViewById(R.id.tv_title);
+        title.setText("Available right now");
 
         recList = (RecyclerView) findViewById(R.id.cardList_main);
         recList.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recList.setLayoutManager(llm);
-
-        List r = timeTable.getTutors(DateTime.now());
-        //r = timeTable.getTestTutors();
-
-        ca = new GeneralCardAdapter(r);
-
-        recList.setAdapter(ca);
-
-        setHeader(r.size());
+        recList.setLayoutManager(new LinearLayoutManager(this));
 
         bFeedback = (Button) findViewById(R.id.bFeedback);
         bFeedback.setOnClickListener(this);
-    }
-
-    /**
-     * Unused as ranging currently serves no purpose.
-     * Could change in the future.
-     */
-    private void startBeaconRanging() {
-        beaconManager = new BeaconManager(this);
-        region = new Region("Common Area",
-                UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), null, null);
-
-        beaconManager.setRangingListener(new BeaconManager.RangingListener() {
-            @Override
-            public void onBeaconsDiscovered(Region region, List<Beacon> list) {
-                if (!list.isEmpty()) {
-                    //refresh();
-                } else {
-                    title.setText("You're outside the reach of the beacons!");
-                    //removeCards();
-                }
-            }
-        });
-    }
-
-    public void setHeader(int size) {
-
-        switch (size) {
-            case 0:
-                title.setText(getString(R.string.title_not_available));
-                break;
-            case 1:
-                title.setText(getString(R.string.title_available_single));
-                break;
-            default:
-                title.setText(getString(R.string.title_available_plural));
-
-        }
-    }
-
-    public int getImageResource(String name) {
-        switch (name) {
-
-            case "Dhruvil":
-                return R.drawable.dhruvil;
-            case "Bhushan":
-                return (R.drawable.bushan);
-            case "Ian":
-                return (R.drawable.ian);
-            case "Jigar":
-                return (R.drawable.jigar);
-            case "Hardik":
-                return (R.drawable.hardik);
-            default:
-                return (R.drawable.mickey);
-        }
     }
 
     protected void sendEmail(String emailAddress, String subject) {
@@ -205,19 +108,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         SystemRequirementsChecker.checkWithDefaultDialogs(this);
 
-//        beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
-//            @Override
-//            public void onServiceReady() {
-//                beaconManager.startRanging(region);
-//            }
-//        });
+        final Firebase tut = mRef.child("tutors");
+
+        adapter = new FirebaseRecyclerAdapter<Tutor, TutorViewHolder>(
+                Tutor.class,
+                R.layout.card_layout_normal,
+                TutorViewHolder.class,
+                tut
+        ) {
+            @Override
+            public void populateViewHolder(TutorViewHolder tutorViewHolder, final Tutor tutor, int position) {
+                tutorViewHolder.vName.setText(tutor.name);
+                tutorViewHolder.vEmail.setText(tutor.email);
+
+                try {
+                    tutorViewHolder.vImage.setImageResource(tutor.imageResource);
+                } catch (Resources.NotFoundException e){
+                    tutorViewHolder.vImage.setImageResource(R.drawable.mickey);
+                }
+
+                tutorViewHolder.bRate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openRatePage();
+                    }
+                });
+                tutorViewHolder.bEmail.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        sendEmail(tutor.email,"Tutor Question");
+                    }
+                });
+            }
+        };
+        recList.setAdapter(adapter);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        this.menu = menu;
         return true;
     }
 
@@ -233,8 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 showAlertDialog(getString(R.string.title_howto), getString(R.string.text_howto));
                 return true;
             case R.id.rate:
-                Intent i = new Intent(this, RateTutorsActivity.class);
-                startActivity(i);
+                openRatePage();
                 return true;
         }
 
@@ -249,11 +178,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         builder.show();
     }
 
-    @Override
-    protected void onPause() {
-//        beaconManager.stopRanging(region);
+    public void openRatePage(){
+        Intent i = new Intent(this, RateTutorsActivity.class);
+        startActivity(i);
+    }
 
-        super.onPause();
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.cleanup();
     }
 
     @Override
@@ -263,6 +196,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bFeedback:
                 sendEmail(getString(R.string.support_email), "Feedback on Tutor App");
                 break;
+        }
+    }
+
+    public static class TutorViewHolder extends RecyclerView.ViewHolder {
+
+        protected TextView vName;
+        protected TextView vEmail;
+        protected ImageView vImage;
+        protected Button bRate;
+        protected Button bEmail;
+
+        public TutorViewHolder(View v) {
+            super(v);
+            vName = (TextView) v.findViewById(R.id.tv_tutor_name_general);
+            vEmail = (TextView) v.findViewById(R.id.tv_tutor_email_general);
+            vImage = (ImageView) v.findViewById(R.id.iv_tutor_general);
+            bEmail = (Button) v.findViewById(R.id.b_email);
+            bRate = (Button) v.findViewById(R.id.b_rate);
         }
     }
 }

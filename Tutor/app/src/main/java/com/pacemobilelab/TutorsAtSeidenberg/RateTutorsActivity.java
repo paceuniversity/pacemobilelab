@@ -18,12 +18,15 @@ import android.widget.Toast;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.firebase.ui.FirebaseRecyclerAdapter;
 
 public class RateTutorsActivity extends AppCompatActivity {
 
     SharedPreferences prefs = null;
+
+    String ratingKey;
 
     FirebaseRecyclerAdapter<Tutor, TutorViewHolder> adapter;
 
@@ -38,7 +41,7 @@ public class RateTutorsActivity extends AppCompatActivity {
 
         prefs = getSharedPreferences("com.pacemobilelab.TutorsAtSeidenberg", MODE_PRIVATE);
 
-        mRef = new Firebase("https://tutorsatseidenberg.firebaseio.com/tutors/");
+        mRef = new Firebase("https://tutorsatseidenberg.firebaseio.com/");
 
         setupLayout();
     }
@@ -54,12 +57,6 @@ public class RateTutorsActivity extends AppCompatActivity {
         recList.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    /**
-     * TODO: Fix rating system
-     *
-     * @param name Name of the tutor
-     * @return The rating of the tutor
-     */
     private float getRating(String name) {
 
         String shortName = name.split(" ")[0];
@@ -70,13 +67,17 @@ public class RateTutorsActivity extends AppCompatActivity {
 
     private void saveStars(String name, float rating) {
 
+        //Saving to local
         String shortName = name.split(" ")[0];
-
         SharedPreferences.Editor spEditor = this.getPreferences(Context.MODE_PRIVATE).edit();
-
         spEditor.putFloat("RATING_" + shortName, rating);
-
         spEditor.apply();
+
+        //Saving to Firebase
+        if (rating > 0){
+            Firebase q = mRef.child("ratings/" + shortName + "/" + ratingKey);
+            q.setValue(rating);
+        }
 
     }
 
@@ -90,12 +91,51 @@ public class RateTutorsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        if (prefs.getBoolean("first", true)) {
+
+            prefs.edit().putBoolean("first", false).commit();
+
+            //Generate new rating Key
+            Firebase q = mRef.child("ratings/");
+            String newKey = q.push().getKey();
+            Log.d("TEST", "New Key: " + newKey);
+            prefs.edit().putString("ratingKey", newKey).commit();
+        }
+        ratingKey = prefs.getString("ratingKey", "test");
+
+        final Firebase tut = mRef.child("tutors");
+
+        Firebase ratings = mRef.child("ratings");
+
+        ratings.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("TEST", "There are " + dataSnapshot.getChildrenCount() + " tutors rated");
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+
+                    float avg_rating = 0;
+                    for (DataSnapshot rating: postSnapshot.getChildren()){
+                        avg_rating += rating.getValue(float.class);
+                    }
+                    avg_rating = avg_rating/(float) postSnapshot.getChildrenCount();
+                    Log.d("TEST", "Rating for " + postSnapshot.getKey() + " is " + avg_rating);
+
+                    tut.child(postSnapshot.getKey()).child("rating_avg").setValue(avg_rating);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
         adapter = new FirebaseRecyclerAdapter<Tutor, TutorViewHolder>(
                 Tutor.class,
                 R.layout.card_layout_rating,
                 TutorViewHolder.class,
-                mRef) {
+                tut
+        ) {
 
             @Override
             public void populateViewHolder(TutorViewHolder tutorViewHolder, final Tutor tutor, int position) {

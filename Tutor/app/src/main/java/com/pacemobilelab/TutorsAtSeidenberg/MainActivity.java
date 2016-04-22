@@ -27,6 +27,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.FirebaseException;
+import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.firebase.ui.FirebaseRecyclerAdapter;
 
@@ -109,14 +110,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         SystemRequirementsChecker.checkWithDefaultDialogs(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
         final Firebase tut = mRef.child("tutors");
+
+        Query queryRef = tut.orderByChild("atWork").equalTo(true);
 
         adapter = new FirebaseRecyclerAdapter<Tutor, TutorViewHolder>(
                 Tutor.class,
                 R.layout.card_layout_normal,
                 TutorViewHolder.class,
-                tut
+                queryRef
         ) {
             @Override
             public void populateViewHolder(TutorViewHolder tutorViewHolder, final Tutor tutor, int position) {

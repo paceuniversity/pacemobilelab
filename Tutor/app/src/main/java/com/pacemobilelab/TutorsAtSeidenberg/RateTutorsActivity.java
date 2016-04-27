@@ -84,7 +84,7 @@ public class RateTutorsActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        adapter.cleanup();
+        //adapter.cleanup();
     }
 
     @Override
@@ -104,31 +104,6 @@ public class RateTutorsActivity extends AppCompatActivity {
         ratingKey = prefs.getString("ratingKey", "test");
 
         final Firebase tut = mRef.child("tutors");
-
-        Firebase ratings = mRef.child("ratings");
-
-        ratings.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("TEST", "There are " + dataSnapshot.getChildrenCount() + " tutors rated");
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-
-                    float avg_rating = 0;
-                    for (DataSnapshot rating: postSnapshot.getChildren()){
-                        avg_rating += rating.getValue(float.class);
-                    }
-                    avg_rating = avg_rating/(float) postSnapshot.getChildrenCount();
-                    Log.d("TEST", "Rating for " + postSnapshot.getKey() + " is " + avg_rating);
-
-                    tut.child(postSnapshot.getKey()).child("rating_avg").setValue(avg_rating);
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
 
         adapter = new FirebaseRecyclerAdapter<Tutor, TutorViewHolder>(
                 Tutor.class,
@@ -161,6 +136,31 @@ public class RateTutorsActivity extends AppCompatActivity {
             }
         };
         recList.setAdapter(adapter);
+
+        Firebase ratings = mRef.child("ratings");
+
+        ratings.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("TEST", "There are " + dataSnapshot.getChildrenCount() + " tutors rated");
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+
+                    float avg_rating = 0;
+                    for (DataSnapshot rating: postSnapshot.getChildren()){
+                        avg_rating += rating.getValue(float.class);
+                    }
+                    avg_rating = avg_rating/(float) postSnapshot.getChildrenCount();
+                    Log.d("TEST", "Rating for " + postSnapshot.getKey() + " is " + avg_rating);
+
+                    tut.child(postSnapshot.getKey()).child("rating_avg").setValue(avg_rating);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
     public static class TutorViewHolder extends RecyclerView.ViewHolder {

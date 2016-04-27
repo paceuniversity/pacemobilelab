@@ -31,6 +31,8 @@ import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.firebase.ui.FirebaseRecyclerAdapter;
 
+import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -86,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         bFeedback = (Button) findViewById(R.id.bFeedback);
         bFeedback.setOnClickListener(this);
+
     }
 
     protected void sendEmail(String emailAddress, String subject) {
@@ -200,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStop() {
         super.onStop();
-        adapter.cleanup();
+        //adapter.cleanup();
     }
 
     @Override

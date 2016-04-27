@@ -66,7 +66,7 @@ public class TutorTimeTable {
         int hour = rightNow.getHourOfDay();
 
         for (int i = 0; i < allTutors.size(); i++) {
-            if (isWorking(day, allTutors.get(i), hour))
+            if (isWorking(day - 1 , allTutors.get(i), hour))
                 result.add(allTutors.get(i));
         }
 

@@ -15,8 +15,8 @@ android {
         applicationId "com.pacemobilelab.TutorsAtSeidenberg"
         minSdkVersion 18
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "2.0"
         renderscriptTargetApi 19
         renderscriptSupportModeEnabled true
     }

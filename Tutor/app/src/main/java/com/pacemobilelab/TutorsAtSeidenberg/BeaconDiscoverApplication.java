@@ -50,7 +50,7 @@ public class BeaconDiscoverApplication extends Application {
                         String txt = "Available tutors right now: ";
 
                         for (int i = 0; i < tutors.size(); i++) {
-                            txt += ((Tutor) tutors.get(0)).name.split(" ")[0];
+                            txt += ((Tutor) tutors.get(i)).name.split(" ")[i];
 
                             if (i==tutors.size()-1)
                                 break;

@@ -27,6 +27,7 @@ import com.estimote.sdk.SystemRequirementsChecker;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -91,6 +92,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
+        Log.d("TEST", "Day today: " + DateTime.now().dayOfWeek().getAsShortText());
+        Log.d("TEST", "Day today: " + DateTime.now().dayOfWeek().getAsString());
         List r = timeTable.getTutors(DateTime.now());
         //r = timeTable.getTestTutors();
 

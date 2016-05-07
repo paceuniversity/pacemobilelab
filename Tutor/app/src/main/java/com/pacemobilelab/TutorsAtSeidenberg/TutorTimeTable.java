@@ -1,6 +1,7 @@
 package com.pacemobilelab.TutorsAtSeidenberg;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.joda.time.DateTime;
 
@@ -11,7 +12,8 @@ import java.util.List;
  * TODO: Create a better way of instantiating tutors and updating the schedule.
  */
 public class TutorTimeTable {
-    public final int MONDAY=0, TUESDAY=1, WEDNESDAY=2, THURSDAY=3, FRIDAY=4;
+    public final int MONDAY=0, TUESDAY=1, WEDNESDAY=2,
+            THURSDAY=3, FRIDAY=4, SATURDAY=5, SUNDAY =6;
 
     List allTutors;
 
@@ -65,8 +67,10 @@ public class TutorTimeTable {
         int day = rightNow.getDayOfWeek();
         int hour = rightNow.getHourOfDay();
 
+        Log.d("TEST", "day: " + day);
+
         for (int i = 0; i < allTutors.size(); i++) {
-            if (isWorking(day - 1 , allTutors.get(i), hour))
+            if (isWorking(day, allTutors.get(i), hour))
                 result.add(allTutors.get(i));
         }
 
@@ -86,7 +90,7 @@ public class TutorTimeTable {
 
         Tutor t = (Tutor) o;
 
-        return t.isWorking(day, hour);
+        return t.isWorking(day-1, hour);
     }
 
     public List getAllTutors() {

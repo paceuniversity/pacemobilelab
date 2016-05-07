@@ -1,18 +1,20 @@
 package com.pacemobilelab.TutorsAtSeidenberg;
 
+import android.util.Log;
+
 /**
  * Created by jangerhard on 20-Apr-16.
  */
 public class WorkSchedule {
 
     /**
-     * 5 days (Monday to Friday)
+     * 7 days (Monday to sunday)
      * 11 hours (from 9:00 to 20:00)
      */
 
     final int START=9, END=20;
 
-    boolean[][] calendar = new boolean[24][5];
+    boolean[][] calendar = new boolean[24][7];
 
     public WorkSchedule(){
         clear();
@@ -37,6 +39,7 @@ public class WorkSchedule {
     }
 
     public boolean isWorking(int day, int hour){
+
         return calendar[hour][day];
     }
 

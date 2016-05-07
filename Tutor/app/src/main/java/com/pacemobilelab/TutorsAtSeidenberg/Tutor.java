@@ -1,5 +1,7 @@
 package com.pacemobilelab.TutorsAtSeidenberg;
 
+import android.util.Log;
+
 public class Tutor {
 
     protected String name;
@@ -36,7 +38,11 @@ public class Tutor {
     }
 
     public boolean isWorking(int day, int hour){
-        return sch.isWorking(day,hour);
+        boolean truth = sch.isWorking(day,hour);
+
+        Log.d("TEST", name + " is working on " + day + "? " + truth);
+
+        return truth;
     }
 
     public WorkSchedule getSch(){
